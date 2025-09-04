@@ -29,7 +29,7 @@ const getProfile = (req, res) => {
   res.json(req.user);
 };
 
-// Función para cerrar sesión
+//para cerrar sesión
 const logout = (req, res) => {
   res.clearCookie("token", {
     httpOnly: true,
