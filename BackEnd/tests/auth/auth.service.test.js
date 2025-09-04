@@ -8,10 +8,12 @@ jest.mock("jsonwebtoken", () => ({
 }));
 
 describe("Auth Service Unit Tests", () => {
+  // Configuramos la variable de entorno para la prueba
+  process.env.JWT_SECRET = "test_secret";
+
   // Antes de cada prueba, reinicia los mocks.
   beforeEach(() => {
     jest.clearAllMocks();
-    process.env.JWT_SECRET = "test_secret";
   });
 
   it("should generate a JWT with the correct user data and secret", () => {
