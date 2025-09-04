@@ -1,0 +1,132 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// MODELO PRINCIPAL DE USUARIOS
+model User {
+  id         String   @id @default(cuid())
+  githubId   Int      @unique
+  username   String
+  name       String
+  email      String?
+  avatarUrl  String
+  createdAt  DateTime @default(now())
+
+  // Relaciones
+  profile    Profile?
+  metrics    Metric[]
+  badges     BadgeAssignment[]
+  teamId     String?
+  team       Team?    @relation(fields: [teamId], references: [id])
+  activity   ActivityLog[]
+}
+
+// PERFIL DETALLADO DEL USUARIO
+model Profile {
+  id             String   @id @default(cuid())
+  userId         String   @unique
+  user           User     @relation(fields: [userId], references: [id])
+  level          Int      @default(1)
+  recentActivity Json?
+  bio            String?
+}
+
+// MÉTRICAS DEL USUARIO
+model Metric {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  points    Int      @default(0)
+  commits   Int      @default(0)
+  prs       Int      @default(0)
+  branches  Int      @default(0)
+  updatedAt DateTime @updatedAt
+}
+
+// INSIGNIAS DISPONIBLES
+model Badge {
+  id          String   @id @default(cuid())
+  name        String
+  description String
+  iconUrl     String
+  createdAt   DateTime @default(now())
+
+  // Relaciones
+  users       BadgeAssignment[]
+}
+
+// RELACIÓN USER - BADGE
+model BadgeAssignment {
+  id         String   @id @default(cuid())
+  userId     String
+  badgeId    String
+  obtainedAt DateTime @default(now())
+
+  user       User     @relation(fields: [userId], references: [id])
+  badge      Badge    @relation(fields: [badgeId], references: [id])
+}
+
+// EQUIPOS
+model Team { 
+  id        String   @id @default(cuid())
+  name      String
+  createdAt DateTime @default(now())
+
+  members   User[]
+}
+
+// LOG DE ACTIVIDADES (COMMITS, PRs, ETC.)
+model ActivityLog {
+  id        String   @id @default(cuid())
+  userId    String
+  type      String   // Ej: "commit", "pull_request", etc.
+  metadata  Json
+  createdAt DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+// MODELO DE REGLAS
+model Rule {
+  id          String   @id @default(cuid())
+  eventType   String   // Ej: "commit", "pull_request"
+  description String
+  points      Int
+  createdAt   DateTime @default(now())
+}
+
+
+model github_events {
+  id               String   @id @default(uuid()) @db.Uuid
+  delivery_id      String   @unique
+  event_type       String
+  action           String? 
+  installation_id  BigInt? 
+  repo_id          BigInt?
+  repo_full_name   String?
+  sender_login     String?
+  commits_count    Int?
+  github_created_at DateTime? @db.Timestamptz
+  received_at      DateTime  @default(now()) @db.Timestamptz
+  signature_valid  Boolean   @default(true)
+  processed_status String    @default("stored")
+  payload          Json
+ 
+  @@index([event_type], map: "idx_ghe_event_type")
+  @@index([repo_full_name], map: "idx_ghe_repo_full_name")
+  @@index([sender_login], map: "idx_ghe_sender_login")
+  @@index([received_at], map: "idx_ghe_received_at")
+  @@index([github_created_at], map: "idx_ghe_github_created")
+}

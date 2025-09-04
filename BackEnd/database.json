@@ -1,0 +1,80 @@
+{
+  "users": [
+    {
+      "id": "clxb6x2a400003h125t9x4f8b",
+      "githubId": 130850305,
+      "username": "Ebautista27",
+      "name": "Ebautista27",
+      "email": "eabautista57@soy.sena.edu.co",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/130850305?v=4",
+      "createdAt": "2025-08-27T10:00:00Z",
+      "teamId": "team01"
+    }
+  ],
+  "profiles": [
+    {
+      "id": "clxb6x2a400013h125t9x4f8c",
+      "userId": "clxb6x2a400003h125t9x4f8b",
+      "level": 15,
+      "recentActivity": { "lastCommit": "2025-08-26" },
+      "bio": "Desarrollador full-stack apasionado por Node.js y los retos."
+    }
+  ],
+  "metrics": [
+    {
+      "id": "clxb6x2a400023h125t9x4f8d",
+      "userId": "clxb6x2a400003h125t9x4f8b",
+      "points": 500,
+      "commits": 120,
+      "prs": 30,
+      "branches": 5,
+      "updatedAt": "2025-08-27T09:30:00Z"
+    }
+  ],
+  "badges": [
+    {
+      "id": "badge01",
+      "name": "Contribuidor Novato",
+      "description": "50+ commits en un mes",
+      "iconUrl": "https://example.com/icons/novato.png",
+      "createdAt": "2025-01-01T00:00:00Z"
+    },
+    {
+      "id": "badge02",
+      "name": "Guerrero de PRs",
+      "description": "5+ PRs aprobados",
+      "iconUrl": "https://example.com/icons/guerrero.png",
+      "createdAt": "2025-02-01T00:00:00Z"
+    }
+  ],
+  "badgeAssignments": [
+    {
+      "id": "ba01",
+      "userId": "clxb6x2a400003h125t9x4f8b",
+      "badgeId": "badge01",
+      "obtainedAt": "2025-03-15T00:00:00Z"
+    },
+    {
+      "id": "ba02",
+      "userId": "clxb6x2a400003h125t9x4f8b",
+      "badgeId": "badge02",
+      "obtainedAt": "2025-04-20T00:00:00Z"
+    }
+  ],
+  "teams": [
+    {
+      "id": "team01",
+      "name": "Los Vengadores del Código",
+      "createdAt": "2025-01-10T00:00:00Z"
+    }
+  ],
+  "activityLogs": [
+    {
+      "id": "log01",
+      "userId": "clxb6x2a400003h125t9x4f8b",
+      "type": "commit",
+      "metadata": { "repo": "mi-proyecto", "message": "feat: nueva funcionalidad" },
+      "createdAt": "2025-08-26T15:00:00Z"
+    }
+  ]
+}
